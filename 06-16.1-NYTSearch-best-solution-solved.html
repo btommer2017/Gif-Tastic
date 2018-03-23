@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>New York Times Search</title>
+  <!-- Bootswatch Styling for Improving the Aesthetics -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/flatly/bootstrap.min.css">
+
+  <!-- Font Awesome CSS Icons (For cool glyphicons) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <!-- Style to fix the issue of text extending past panel length -->
+  <style>
+    .panel-body a {
+      word-break: break-all;
+    }
+
+    .articleHeadline {
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Main Bootstrap Search -->
+  <div class="container">
+
+    <!-- Jumbotron for Title -->
+    <div class="jumbotron" style="background-color: #20315A ; color: white;">
+      <h1 class="text-center">
+        <strong>
+          <i class="fa fa-newspaper-o"></i> New York Times Search</strong>
+      </h1>
+    </div>
+
+    <!-- Row for Searching New York Times -->
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+        <!-- First panel is for handling the search parameters -->
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <strong>
+                <i class="fa  fa-list-alt"></i> Search Parameters</strong>
+            </h3>
+          </div>
+          <div class="panel-body">
+
+            <!-- Here we create an HTML Form for handling the inputs-->
+            <form role="form">
+
+              <!-- Here we create the text box for capturing the search term-->
+              <div class="form-group">
+                <label for="search">Search Term:</label>
+                <input type="text" class="form-control" id="search-term">
+              </div>
+
+              <!-- Here we capture the number of records that the user wants to retrieve  -->
+              <div class="form-group">
+                <label for="pwd">Number of Records to Retrieve:</label>
+                <select class="form-control" id="article-count">
+                  <option value="1">1</option>
+                  <!-- Setting the option for 5 as default -->
+                  <option value="5" selected>5</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+
+              <!-- Here we capture the Start Year Parameter-->
+              <div class="form-group">
+                <label for="start-year">Start Year (Optional):</label>
+                <input type="text" class="form-control" id="start-year">
+              </div>
+
+              <!-- Here we capture the End Year Parameter -->
+              <div class="form-group">
+                <label for="end-year">End Year (Optional):</label>
+                <input type="text" class="form-control" id="end-year">
+              </div>
+
+              <!-- Here we have our final submit button -->
+              <button type="submit" class="btn btn-default" id="run-search">
+                <i class="fa fa-search"></i> Search</button>
+              <button type="button" class="btn btn-default" id="clear-all">
+                <i class="fa fa-trash"></i> Clear Results</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- This row will handle all of the retrieved articles -->
+    <div class="row">
+      <div class="col-sm-12">
+        <br>
+
+        <!-- This panel will initially be made up of a panel and wells for each of the articles retrieved -->
+        <div class="panel panel-primary">
+
+          <!-- Panel Heading for the retrieved articles box -->
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <strong>
+                <i class="fa fa-table"></i> Top Articles</strong>
+            </h3>
+          </div>
+
+          <!-- This main panel will hold each of the resulting articles -->
+          <div class="panel-body" id="well-section">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Region -->
+    <div class="row">
+      <div class="col-sm-12">
+
+        <!-- Line Break followed by closing -->
+        <hr>
+        <h5 class="text-center">
+          <small>Made with lots and lots of
+            <i class="fa fa-heart"></i>
+          </small>
+        </h5>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- jQuery JS #######################3######################JAVASCRIPT##########################33-->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+  <!-- Code to the JavaScript File -->
+  <script src="NYTCode.js">
+  
+  /**
+ * pulls information from the form and build the query URL
+ * @returns {string} URL for NYT API based on form inputs
+ */
+function buildQueryURL() {
+  // queryURL is the url we'll use to query the API
+  var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+
+  // add the api key parameter (the one we received when we registered)
+  queryURL += "?api-key=b9f91d369ff59547cd47b931d8cbc56b:0:74623931";
+  
+  // grab text the user typed into the search input, add as parameter to url
+  var searchTerm = $("#search-term").val().trim();
+  queryURL += "&q=" + searchTerm;
+
+  // if the user provides a startYear, include it in the queryURL
+  var startYear = $("#start-year").val().trim();
+
+  if (parseInt(startYear)) {
+    queryURL += "&begin_date=" + startYear + "0101";
+  }
+
+  // if the user provides an endYear, include it in the queryURL
+  var endYear = $("#end-year").val().trim();
+
+  if (parseInt(endYear)) {
+    queryURL += "&end_date=" + endYear + "0101";
+  }
+
+  // Logging the URL so we have access to it for troubleshooting
+  console.log("---------------\nURL: " + queryURL + "\n---------------");
+
+  return queryURL;
+}
+
+/**
+ * takes API data (JSON/object) and turns it into elements on the page
+ * @param {object} NYTData - object containing NYT API data
+ */
+function updatePage(NYTData) {
+  // get from the form the number of results to display
+  // api doesn't have a "limit" parameter, so we have to do this ourselves
+  var numArticles = $("#article-count").val();
+
+  // log the NYTData to console, where it will show up as an object
+  console.log(NYTData);
+  console.log("------------------------------------");
+
+  // loop through and build elements for the defined number of articles
+  for (var i = 0; i < numArticles; i++) {
+
+    // get specific article info for current index
+    var article = NYTData.response.docs[i];
+
+    // increase the articleCount (track article # - starting at 1)
+    var articleCount = i + 1;
+
+    // create the HTML well (section) and add the article content for each
+    var $articleWell = $("<article>");
+    $articleWell.addClass("well");
+    $articleWell.attr("id", "article-well-" + articleCount);
+
+    // add the newly created element to the DOM
+    $("#well-section").append($articleWell);
+
+    // if the article has a headline, log and append to $articleWell
+    var headline = article.headline;
+
+    if (headline && headline.main) {
+      console.log(headline.main);
+
+      $articleWell.append(
+        "<h3 class='articleHeadline'>" +
+        "<span class='label label-primary'>" + articleCount + "</span>" +
+        "<strong> " + headline.main + "</strong></h3>"
+      );
+    }
+
+    // if the article has a byline, log and append to $articleWell
+    var byline = article.byline;
+
+    if (byline && byline.original) {
+      console.log(byline.original);
+
+      $articleWell.append("<h5>" + byline.original + "</h5>");
+    }
+
+    // log section, and append to document if exists
+    var section = article.section_name;
+    console.log(article.section_name);
+    if (section) {
+      $articleWell.append("<h5>Section: " + section + "</h5>");
+    }
+
+    // log published date, and append to document if exists
+    var pubDate = article.pub_date;
+    console.log(article.pub_date);
+    if (pubDate) {
+      $articleWell.append("<h5>" + article.pub_date + "</h5>");
+    }
+
+    // append and log url
+    $articleWell.append(
+      "<a href='" + article.web_url + "'>" + article.web_url + "</a>"
+    );
+    console.log(article.web_url);
+  }
+}
+
+// function to empty out the articles
+function clear() {
+  $("#well-section").empty();
+}
+
+// CLICK HANDLERS
+// ==========================================================
+
+// .on("click") function associated with the Search Button
+$("#run-search").on("click", function(event) {
+  // This line allows us to take advantage of the HTML "submit" property
+  // This way we can hit enter on the keyboard and it registers the search
+  // (in addition to clicks). Prevents the page from reloading on form submit.
+  event.preventDefault();
+
+  // empty the region associated with the articles
+  clear();
+
+  // build the query URL for the ajax request to the NYT API
+  var queryURL = buildQueryURL();
+
+  // make the AJAX request to the API - GETs the JSON data at the queryURL.
+  // the data then gets passed as an argument to the updatePage function
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(updatePage);
+});
+
+//  .on("click") function associated with the clear button
+$("#clear-all").on("click", clear);
+  
+  </script>
+
+</body>
+
+</html>
