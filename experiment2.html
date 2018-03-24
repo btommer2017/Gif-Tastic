@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>INDEX</title>
+    <title>#2Experiment</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style type="text/css">
         button, div, form, input { margin: 5px; }
@@ -58,7 +58,7 @@
             // This line grabs the input from the textbox
             var animal = $("#animal-input").val().trim();
 
-            // Adding animal from the textbox to our array
+            // Adding movie from the textbox to our array
             animalList.push(animal);
 
             // Calling renderButtons which handles the processing of our movie array
@@ -66,8 +66,7 @@
         });
 
 
-        // $("button").on("click", function () {
-            $(document.body).on('click', "button", function() {
+        $("button").on("click", function () {
             // In this case, the "this" keyword refers to the button that was clicked
             var animal = $(this).attr("data-animal");
 

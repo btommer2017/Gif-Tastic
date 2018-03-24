@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Button Experiment</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+        <div class="animalContainer">
+            <button>HI</button>        
+
+            <p>I would like to say: </p>
+
+
+        </div>
+ 
+<script>
+$( "p" ).append( "<strong>Hello</strong>" );
+// var r= $('<input type="button" value="HI Ben"/>');
+//         $("body").append(r);
+        
+</script>
+        <script type="text/javascript">
+
+        animalList = ["cat","dog","elephant","giraffe","naked mole rat","bird","squirrel","rabbit","fish","lion"];
+// Function for displaying aniaml data
+function renderButtons() {
+
+// Deleting the movies prior to adding new movies
+// (this is necessary otherwise you will have repeat buttons)
+// $("#buttons-view").empty();
+// Looping through the array of movies
+for (var i = 0; i < animalList.length; i++) {
+
+  var a = $("<button>").addClass("animal-btn").attr("data-name", animalList[i]).text(animalList[i]);
+   $("#buttons-view").append(a);
+  $("body").append(a);
+}
+}
+renderButtons();
+
+
+
+
+
+
+
+
+
+
+
+        // for (i=0; i<animalList.length; i++) {
+        //     var r= $('<input type="button" value=animalList[i]>');
+        // $("body").append(r); 
+        
+        // var animals = animalList[i]; 
+        // $("body").append(animals + " ").append('<br>');
+    //    <button data-animal=animalList[i]>animalLis     
+                   // }
+
+        </script>
+    <!-- My API Key = 2XQxSqpq9wORLPZdYVPVNtGDsssIVFVr   -->
+</body>
+</html>
+
+
+<!-- <input type='button' value='Add' id='btnAddProfile'> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

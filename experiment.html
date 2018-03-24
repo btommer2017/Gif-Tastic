@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>INDEX</title>
+    <title>#2Experiment</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style type="text/css">
         button, div, form, input { margin: 5px; }
@@ -32,15 +32,26 @@
     <script type="text/javascript">
         // Initial array of animals
         var animalList = ["cat", "dog", "elephant", "giraffe", "naked mole rat", "bird", "squirrel", "rabbit", "fish", "lemur", "sloth",
-            "lion", "manatee", "dik dik", "chameleon"
+            "lion", "manatee", "dik dik", "chameleon", "Lynx", "Kingpin", "Fox"
         ];
 
         
         // Function for displaying aniaml data
-        function renderButtons() {
+  
+        renderButtons();
+        $("#add-animal").on("click", function (event) {
+            event.preventDefault();
+            // This line grabs the input from the textbox
+            var animal = $("#animal-input").val().trim();
 
-            // Deleting the movies prior to adding new movies
-            // (this is necessary otherwise you will have repeat buttons)
+            // Adding movie from the textbox to our array
+            animalList.push(animal);
+
+            // Calling renderButtons which handles the processing of our movie array
+            renderButtons();
+        });
+        function renderButtons() {
+                 // (this is necessary otherwise you will have repeat buttons)
             $("#buttons-view").empty();
             // Looping through the array of movies
             for (var i = 0; i < animalList.length; i++) {
@@ -52,28 +63,14 @@
                 $("#buttons-view").append(a);
                             }
         }
-        renderButtons();
-        $("#add-animal").on("click", function (event) {
-            event.preventDefault();
-            // This line grabs the input from the textbox
-            var animal = $("#animal-input").val().trim();
 
-            // Adding animal from the textbox to our array
-            animalList.push(animal);
-
-            // Calling renderButtons which handles the processing of our movie array
-            renderButtons();
-        });
-
-
-        // $("button").on("click", function () {
-            $(document.body).on('click', "button", function() {
+        $("button").on("click", function () {
             // In this case, the "this" keyword refers to the button that was clicked
             var animal = $(this).attr("data-animal");
 
             // Constructing a URL to search Giphy for the name of the person who said the quote
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-                animal + "&api_key=2XQxSqpq9wORLPZdYVPVNtGDsssIVFVr&limit=5";
+                animal + "&api_key=2XQxSqpq9wORLPZdYVPVNtGDsssIVFVr&limit=40";
 
 
             // Performing our AJAX GET request
@@ -98,7 +95,7 @@
                             var rating = results[i].rating;
 
                             // Creating a paragraph tag with the result item's rating
-                            var p = $("<p>").text("Rating: " + rating);
+                            var p = $("<p>").text("");
 
                             // Creating an image tag
                             var personImage = $("<img>");
