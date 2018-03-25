@@ -5,13 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>INDEX</title>
+    <title>Animal Gifs!</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style type="text/css">
         button, div, form, input { margin: 5px; }
         .item { margin:5px; float: left; }
         p {margin-top: 1px; text-align: center;}
-
+        /* .imageNotAnimated {
+            opacity: 0;
+        }
+        .imageIsAnimated {
+            opacity: 1;
+        } */
     </style>
 </head>
 <body>
@@ -32,8 +37,8 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <script type="text/javascript">
         // Initial array of animals
-        var animalList = ["cat", "dog", "elephant", "giraffe", "naked mole rat", "bird", "squirrel", "rabbit", "fish", "lemur", "sloth",
-            "lion", "manatee", "dik dik", "chameleon"
+        var animalList = ["cat", "dog", "elephant", "naked mole rat", "squirrel", "lemur", "sloth",
+            "manatee", "dik dik", "chameleon"
         ];
 
         
@@ -71,12 +76,13 @@
         // $("button").on("click", function () {
             $(document.body).on('click', "button", function() {
             // In this case, the "this" keyword refers to the button that was clicked
+            var URL = "https://api.giphy.com/v1/gifs/search?q="
             var animal = $(this).attr("data-animal");
-
+            var apiKey = "&api_key=2XQxSqpq9wORLPZdYVPVNtGDsssIVFVr&limit=";
+            var numberOfResults = 20;
             // Constructing a URL to search Giphy for the name of the person who said the quote
-            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-                animal + "&api_key=2XQxSqpq9wORLPZdYVPVNtGDsssIVFVr&limit=10";
-
+            // var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=2XQxSqpq9wORLPZdYVPVNtGDsssIVFVr&limit=10";
+            var queryURL = URL + animal + apiKey + numberOfResults    
 
             // Performing our AJAX GET request
             $.ajax({
@@ -85,10 +91,10 @@
                 })
                 // After the data comes back from the API
                 .then(function (response) {
-                    console.log("###############################################################################################################################")
+                    // console.log("###############################################################################################################################")
                     console.log(response.data);
                     
-                    console.log("###############################################################################################################################")
+                    // console.log("###############################################################################################################################")
                     // Storing an array of results in the results variable
                     var results = response.data;
 console.log(results);
@@ -104,41 +110,75 @@ console.log(results);
                             var rating = results[i].rating;
 
                             // Creating a paragraph tag with the result item's rating
-                            var p = $("<p>").text("Rating: " + rating);
+                            var p = $("<p>").text("#"+[i+1] + " " + "Rating: " + rating);
 
                             // Creating an image tag
-                            gifImage = $("<img>")
+                            var gifImage = $("<img>")
 
                             // Giving the image tag an src attribute of a property pulled off the
                             // result item
                             var stillImage = results[i].images.fixed_height_still.url;
                             var animatedImage = results[i].images.fixed_height.url;
-
+//<img src=stillImage data-still=stillImage data-animate=animatedImage data-state="still" class="gif">
                             gifImage.attr("src", animatedImage);
-                            gifImage.addClass("thisGifImage");
-                
+                            gifImage.attr("data-still", stillImage);
+                            gifImage.attr("data-animate", animatedImage);        
+                            gifImage.attr("data-state","animate" );
+
+
+
+
+                            // gifImage.on("click", function() {
+                            //     $(this).attr("src", animatedImage);
+                            // })
+                            
+              
+                            // gifImage2.attr("src", animatedImage);
+                            // gifImage.addClass("imageNotAnimated");
+                            // gifImage.stillImage
+                            // gifImage.css("opacaity:0;");
+                            // gifImage2.addClass("thisGifImage2")
+
+                            // $('gifDiv').css("background-image", results[i].images.fixed_height_still.url); 
+                            // $('myObject').css('background-image', 'url(' + imageUrl + ')');
    // Appending the paragraph and gifImage to the "gifDiv" div 
+                            // $('gifDiv').css('background-image', 'url("https://media2.giphy.com/media/OUuwn1HCfQjIY/200.gif")');
+                            
+                            //  $('.item').css("background-image", 'url(https://media0.giphy.com/media/JIX9t2j0ZTN9S/200_s.gif)');
                             gifDiv.append(gifImage);
                             gifDiv.append(p);
 
+
+                            // console.log("trying to add a background image before code" + [i])
+                            // $('myObject').css('background-image', 'url(' + imageUrl + ')');
+                            //  $('.item').css("background-color", "red");
+
+                            // console.log("trying to add a background image after code"+ [i])
+                            // <img src="https://media2.giphy.com/media/OUuwn1HCfQjIY/200.gif" class="imageIsAnimated">
                             // Prepending the gifDiv to the "#animal-gifs-view" div in the HTML
                             $("#animal-gifs-view").prepend(gifDiv);
-
+                             
                         }
                     }
                 });
         });
 
         $(document).on('click', 'img', function() {
+var state = $(this).attr('data-state');
+            console.log(this);
+            console.log(state);
+          if (state === "still") {
+              console.log("FU YEAH IT DOES");
+              $(this).attr("src", $(this).attr("data-animate"));
+              $(this).attr("data-state", "animate");
+             }
+          else {
+              $(this).attr("src", $(this).attr("data-still"));
+              $(this).attr("data-state", "still");
 
-console.log("hello world");
-console.log(this);
-// console.log(gifImage.attr());
+          }   
+   })
 
-// if ($("thisGifImage").attr() === ("src", this.images.fixed_height.url))
-
-// console.log("FUCK YEAH")
-})
     </script>
 </body>
 </html>
