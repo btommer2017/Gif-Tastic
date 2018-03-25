@@ -66,16 +66,16 @@
         });
 
 
-        $("button").on("click", function () {
-            // In this case, the "this" keyword refers to the button that was clicked
+         $(document).on('click', "button", function() {
+            // "this" keyword refers to the button that was clicked
             var animal = $(this).attr("data-animal");
 
-            // Constructing a URL to search Giphy for the name of the person who said the quote
+            // Constructing a URL to search Giphy for the animal selected
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
                 animal + "&api_key=2XQxSqpq9wORLPZdYVPVNtGDsssIVFVr&limit=5";
 
 
-            // Performing our AJAX GET request
+            // AJAX GET request
             $.ajax({
                     url: queryURL,
                     method: "GET"
@@ -104,7 +104,9 @@
 
                             // Giving the image tag an src attribute of a proprty pulled off the
                             // result item
+                            //################################### code for the animated gif ############################
                             personImage.attr("src", results[i].images.fixed_height.url);
+                            console.log(results[i]);
 
    // Appending the paragraph and personImage we created to the "gifDiv" div we created
                             gifDiv.append(p);
@@ -116,6 +118,20 @@
                     }
                 });
         });
+
+$(document).on('click', 'img', function() {
+
+console.log("hello world");
+console.log(this);
+<img src="https://media0.giphy.com/media/mCRJDo24UvJMA/200.gif">
+
+
+
+
+
+})
+
+
     </script>
 </body>
 </html>

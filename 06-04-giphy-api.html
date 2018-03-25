@@ -16,7 +16,9 @@
       url: queryURL,
       method: "GET"
     }).then(function(response) {
-      console.log(response);
+      result = response.data;
+      for (var i=0; i < result.length; i++) {
+      console.log("#"+i + ": " + response.data[i].title); }
     });
   </script>
 

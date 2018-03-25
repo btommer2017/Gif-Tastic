@@ -10,6 +10,7 @@
     <style type="text/css">
         button, div, form, input { margin: 5px; }
         .item { margin:5px; float: left; }
+        p {margin-top: 1px; text-align: center;}
 
     </style>
 </head>
@@ -54,13 +55,14 @@
         }
         renderButtons();
         $("#add-animal").on("click", function (event) {
+            //stop page from refreshing and losing all input
             event.preventDefault();
             // This line grabs the input from the textbox
             var animal = $("#animal-input").val().trim();
-
             // Adding animal from the textbox to our array
             animalList.push(animal);
-
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&   make this work   ##############
+                $("animal-input").val("");
             // Calling renderButtons which handles the processing of our movie array
             renderButtons();
         });
@@ -73,7 +75,7 @@
 
             // Constructing a URL to search Giphy for the name of the person who said the quote
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-                animal + "&api_key=2XQxSqpq9wORLPZdYVPVNtGDsssIVFVr&limit=5";
+                animal + "&api_key=2XQxSqpq9wORLPZdYVPVNtGDsssIVFVr&limit=10";
 
 
             // Performing our AJAX GET request
@@ -83,9 +85,13 @@
                 })
                 // After the data comes back from the API
                 .then(function (response) {
+                    console.log("###############################################################################################################################")
+                    console.log(response.data);
+                    
+                    console.log("###############################################################################################################################")
                     // Storing an array of results in the results variable
                     var results = response.data;
-
+console.log(results);
                     // Looping over every result item
                     for (var i = 0; i < results.length; i++) {
 
@@ -101,22 +107,42 @@
                             var p = $("<p>").text("Rating: " + rating);
 
                             // Creating an image tag
-                            var personImage = $("<img>");
+                            gifImage = $("<img>")
 
-                            // Giving the image tag an src attribute of a proprty pulled off the
+                            // Giving the image tag an src attribute of a property pulled off the
                             // result item
-                            personImage.attr("src", results[i].images.fixed_height.url);
+                            var stillImage = results[i].images.fixed_height_still.url;
+                            var animatedImage = results[i].images.fixed_height.url;
 
-   // Appending the paragraph and personImage we created to the "gifDiv" div we created
+                            gifImage.attr("src", animatedImage);
+                            gifImage.addClass("thisGifImage");
+                
+   // Appending the paragraph and gifImage to the "gifDiv" div 
+                            gifDiv.append(gifImage);
                             gifDiv.append(p);
-                            gifDiv.append(personImage);
 
-                            // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
+                            // Prepending the gifDiv to the "#animal-gifs-view" div in the HTML
                             $("#animal-gifs-view").prepend(gifDiv);
+
                         }
                     }
                 });
         });
+
+        $(document).on('click', 'img', function() {
+
+console.log("hello world");
+console.log(this);
+// console.log(gifImage.attr());
+
+// if ($("thisGifImage").attr() === ("src", this.images.fixed_height.url))
+
+// console.log("FUCK YEAH")
+})
     </script>
 </body>
 </html>
+
+
+<!-- <img src="https://media0.giphy.com/media/JIX9t2j0ZTN9S/200.gif" class="thisGifImage">
+<img src="https://media0.giphy.com/media/JIX9t2j0ZTN9S/200_s.gif" class="thisGifImage"> -->
