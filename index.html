@@ -6,23 +6,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Animal Gifs!</title>
+    <title>Gif Populator</title>
 </head>
 
 <body>
     <div class="container">
-        <h1 id="title">Animal Gifs!</h1>
+        <h1 id="title">Gif Populator!</h1>
         <h3 id="userQuery">Number of Gifs: 10</h3>
+        <h4 id="instructions">Press the labeled buttons to populate your page with gifs.  Add your own categories or change how many you want to display as well.
+            use the reset button to clear the page back to default.</h4>
+        </h6>
         <!-- Rendered Buttons will get Dumped Here  -->
         <div id="buttons-view"></div>
         
+        <input id="add-animal" type="submit" value="Add a Giphy!">
+        <input type="text" id="animal-input">
+        <input id="userInputNumberOfGifs" type="submit" value="How Many Gifs?">
+        <input type="text" id="userNumber-input">
+        <!-- this button will refresh the page since there's no function event.preventDefault() attached to it -->
         <form id="animal-form">
-            <input id="add-animal" type="submit" value="Add a Giphy!">
-            <input type="text" id="animal-input">
-            <input id="userInputNumberOfGifs" type="submit" value="How Many Gifs?">
-            <input type="text" id="userNumber-input">
-            <!-- this button will refresh the page since there's no function event.preventDefault() attached to it -->
-            <input id="refresh" type="submit" value="Reset Page">
+        <input id="refresh" type="submit" value="Reset Page">
         </form>
                 <!-- Animal gifs will be place here -->
         <div id="animal-gifs-view"></div>

@@ -19,6 +19,13 @@ body {
             text-align: center;
             color:white;
         }
+#instructions {
+    
+    margin-top: 1px;
+    margin-bottom: 3px;
+    margin-left: 10px;
+}
+
 
         #resultsNumber {
             float: right;
@@ -26,12 +33,13 @@ body {
 
         #title {
             margin-bottom: 1px;
-            margin-left: 2px;
+            margin-left: 10px;
         }
 
         #userQuery {
             margin-top: 2px;
-            margin-left: 4px;
+            margin-bottom: 2px;
+            margin-left: 10px;
         }
 
         #refresh {

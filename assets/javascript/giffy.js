@@ -1,6 +1,6 @@
- // Initial array of animals
+ // Initial array of animals and others
  var animalList = ["cat", "dog", "elephant", "naked mole rat", "squirrel", "lemur", "sloth",
-     "manatee", "bear cub", "chameleon"
+     "manatee", "bear cub", "chameleon", "pac-man", "south park", "he-man", "disney", "cartoons"
  ];
 
  // Function for displaying aniaml data
