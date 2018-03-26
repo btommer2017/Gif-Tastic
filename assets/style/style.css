@@ -1,8 +1,8 @@
+.container {
+    background-image: url("assets/images/ambientBackground.jpg");
+}
 
-        button,
-        div,
-        form,
-        input {
+        button, div, form, input {
             margin: 5px;
         }
 
