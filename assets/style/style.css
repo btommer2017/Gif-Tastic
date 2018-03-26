@@ -1,0 +1,35 @@
+
+        button,
+        div,
+        form,
+        input {
+            margin: 5px;
+        }
+
+        .item {
+            margin: 5px;
+            float: left;
+        }
+
+        p {
+            margin-top: 1px;
+            text-align: center;
+        }
+
+        #resultsNumber {
+            float: right;
+        }
+
+        #title {
+            margin-bottom: 1px;
+            margin-left: 2px;
+        }
+
+        #userQuery {
+            margin-top: 2px;
+            margin-left: 4px;
+        }
+
+        #refresh {
+            float: right;
+        }
