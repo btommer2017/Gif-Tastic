@@ -1,5 +1,8 @@
-.container {
+div.container {
     background-image: url("assets/images/ambientBackground.jpg");
+}
+body {
+    background-image: url("../images/ambientBackground.jpg");
 }
 
         button, div, form, input {
@@ -14,6 +17,7 @@
         p {
             margin-top: 1px;
             text-align: center;
+            color:white;
         }
 
         #resultsNumber {
