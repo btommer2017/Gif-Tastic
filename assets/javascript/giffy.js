@@ -26,6 +26,7 @@
  $("#userInputNumberOfGifs").on("click", function (event) {
      event.preventDefault();
      userButtonNumber = $("#userNumber-input").val().trim();
+     $("#userNumber-input").val('');
      $("#userQuery").text("Number of Gifs: " + userButtonNumber);
  })
 
@@ -34,9 +35,11 @@
      event.preventDefault();
      // This line grabs the input from the textbox
      var animal = $("#animal-input").val().trim();
+     $("#animal-input").val('');
      // Adding animal from the textbox to our array
      animalList.push(animal);
-     $("animal-input").val("");
+    //  $("animal-input").val("");
+     console.log("this is animal input" + $("animal-input").text);
      // Calling renderButtons which handles the processing of our animal array
      renderButtons();
  });

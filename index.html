@@ -18,18 +18,26 @@
         </h6>
         <!-- Rendered Buttons will get Dumped Here  -->
         <div id="buttons-view"></div>
+      <div style="width:100%; height:40px;">
+        <form style="float: left;">
         
         <input id="add-animal" type="submit" value="Add a Giphy!">
         <input type="text" id="animal-input">
+    </form> 
+    <form style="float: left;">
         <input id="userInputNumberOfGifs" type="submit" value="How Many Gifs?">
         <input type="text" id="userNumber-input">
+    </form>
         <!-- this button will refresh the page since there's no function event.preventDefault() attached to it -->
         <form id="animal-form">
         <input id="refresh" type="submit" value="Reset Page">
         </form>
+        </div>
                 <!-- Animal gifs will be place here -->
-        <div id="animal-gifs-view"></div>
-    </div>
+                <div id="animal-gifs-view"></div>
+                
+            </div>
+            <!-- <div style="width:100%; height:200px; background-color:black"></div> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="assets/javascript/giffy.js"></script>
